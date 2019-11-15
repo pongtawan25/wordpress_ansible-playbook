@@ -1,0 +1,40 @@
+---
+- hosts: test
+  gather_facts: false
+  remote_user: root
+  vars:
+   ansible_password: redhat
+  tasks:
+   - yum:
+      name: "{{ packages }}"
+     vars:
+      packages:
+       - httpd
+       - mariadb
+       - mariadb-server
+       - php
+       - php-common
+       - php-mysql
+       - php-gd
+       - php-xml
+       - php-mbstring
+       - php-mcrypt
+       - php-xmlrpc
+       - unzip
+       - wget
+   - name: start and enable http
+     service:
+      name: httpd
+      state: started
+      enabled: true
+   - name: start and enable mariadb
+     service:
+      name: mariadb
+      state: started
+      enabled: true
+   - name: permanent and reload http
+     firewalld:
+      service: http
+      permanent: true
+      state: enabled
+      immediate: true
