@@ -1,5 +1,5 @@
 ---
-- hosts: test
+- hosts: serverx
   gather_facts: false
   remote_user: root
   vars:
